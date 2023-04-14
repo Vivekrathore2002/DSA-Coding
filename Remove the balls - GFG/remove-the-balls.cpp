@@ -10,15 +10,27 @@ using namespace std;
 class Solution {
 public:
     int finLength(int N, vector<int>& color, vector<int>& radius) {
-        stack<pair<int, int>> stk; // pair of (color, radius)
-        for (int i = 0; i < N; i++) {
-            if (!stk.empty() && stk.top().first == color[i] && stk.top().second == radius[i]) {
-                stk.pop(); // remove the previous ball if it is the same as the current one
-            } else {
-                stk.push({color[i], radius[i]});
+        // // 1st solution by chatgpt
+        // stack<pair<int, int>> stk; // pair of (color, radius)
+        // for (int i = 0; i < N; i++) {
+        //     if (!stk.empty() && stk.top().first == color[i] && stk.top().second == radius[i]) {
+        //         stk.pop(); // remove the previous ball if it is the same as the current one
+        //     } else {
+        //         stk.push({color[i], radius[i]});
+        //     }
+        // }
+        // return stk.size();
+        // 2nd question by main easy concept
+        stack<int> st;
+        for(int i=0;i<N;i++){
+            if(st.size()){
+                int index = st.top();
+                if(color[index]==color[i] && radius[index]==radius[i])st.pop();
+                else st.push(i);
             }
+            else st.push(i);
         }
-        return stk.size();
+        return st.size();
     }
 };
 
