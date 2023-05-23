@@ -9,6 +9,9 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+ // https://www.youtube.com/watch?v=ffE1xj51EBQ&ab_channel=CodeHelp-byBabbar
+
 class Solution {
 public:
 void createMapping(vector<int>& inorder,map<int,int> &nodeToIndex,int n){
