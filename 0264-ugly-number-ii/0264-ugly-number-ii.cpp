@@ -1,3 +1,4 @@
+// https://www.youtube.com/watch?v=X5SuOsIWCoI&ab_channel=CodewithAlisha
 class Solution {
 public:
     int nthUglyNumber(int n) {
