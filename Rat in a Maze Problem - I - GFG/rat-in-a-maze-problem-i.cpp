@@ -9,77 +9,103 @@ using namespace std;
 // User function template for C++
 
 class Solution{
-    private:
-    bool isSafe(int x,int y,int n,vector<vector<int>> visited,vector<vector<int>>&m){
-        if((x>=0 && x<n) && (y>=0 && y<n) && visited[x][y]==0 && m[x][y]==1){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    void solve(vector<vector<int>> &m, int n,vector<string>& ans,int x,int y,vector<vector<int>>visited,string path){
-        //base case to return in the end
-        if(x==n-1 && y==n-1){
-            ans.push_back(path);
-            return ;
-        }
-        visited[x][y]=1;
-        //4 choices D,L,R,U
-        //down
-        int newx = x+1;
-        int newy = y;
-        if(isSafe(newx,newy,n,visited,m)){
-            path.push_back('D');
-            solve(m,n,ans,newx,newy,visited,path);
-            path.pop_back();
-        }
-        //left
-        newx = x;
-        newy = y-1;
-        if(isSafe(newx,newy,n,visited,m)){
-            path.push_back('L');
-            solve(m,n,ans,newx,newy,visited,path);
-            path.pop_back();
-        }
-        //right
-        newx = x;
-        newy = y+1;
-        if(isSafe(newx,newy,n,visited,m)){
-            path.push_back('R');
-            solve(m,n,ans,newx,newy,visited,path);
-            path.pop_back();
-        }
-        //up
-        newx = x-1;
-        newy = y;
-        if(isSafe(newx,newy,n,visited,m)){
-            path.push_back('U');
-            solve(m,n,ans,newx,newy,visited,path);
-            path.pop_back();
-        }
-        visited[x][y]=0;
-    }
     public:
-    vector<string> findPath(vector<vector<int>> &m, int n) {
-        vector<string> ans;
-        if(m[0][0]==0)
-        {
-            return ans;
+    bool isSafe(int newx,int newy,vector<vector<bool>>& vis,vector<vector<int>>& m,int n){
+
+    if( (newx>=0 && newx<n) && (newy>=0 && newy<n)&&
+
+        (vis[newx][newy]!=1 && m[newx][newy]==1)){
+
+            return true;
+
         }
-        int srcx=0;
-        int srcy=0;
-        vector<vector<int>> visited=m;
-        //initialise with 0
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                visited[i][j]=0;
+
+    else{
+
+        return false;
+
+    }
+
+}
+
+void solve(int x,int y,vector<vector<int>>& m,int n,vector<string>&ans,
+
+            vector<vector<bool>>& vis,string path){
+
+                if(x==n-1 && y==n-1){
+
+                    ans.push_back(path);
+
+                    return; 
+
+                }
+
+                // movements;
+
+                // d l r u
+
+                //down
+
+                if(isSafe(x+1,y,vis,m,n)){
+
+                    vis[x][y]=1;
+
+                    solve(x+1,y,m,n,ans,vis,path+'D');
+
+                    vis[x][y]=0;
+
+                }
+
+                //left
+
+                if(isSafe(x,y-1,vis,m,n)){
+
+                    vis[x][y]=1;
+
+                    solve(x,y-1,m,n,ans,vis,path+'L');
+
+                    vis[x][y]=0;
+
+                }
+
+                //right
+
+                if(isSafe(x,y+1,vis,m,n)){
+
+                    vis[x][y]=1;
+
+                    solve(x,y+1,m,n,ans,vis,path+'R');
+
+                    vis[x][y]=0;
+
+                }
+
+                //up
+
+                if(isSafe(x-1,y,vis,m,n)){
+
+                    vis[x][y]=1;
+
+                    solve(x-1,y,m,n,ans,vis,path+'U');
+
+                    vis[x][y]=0;
+
+                }
+
             }
-        }
-        string path="";
-        solve(m,n,ans,srcx,srcy,visited,path);
-        sort(ans.begin(),ans.end());
-        return ans;
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        vector<string> ans;
+
+    vector<vector<bool>> visited(n,vector<bool>(n,0));
+
+    string path="";
+
+    if(m[0][0]==0)return ans;
+
+    solve(0,0,m,n,ans,visited,path);
+
+    return ans;
     }
 };
 
