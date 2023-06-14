@@ -1,21 +1,62 @@
+// https://www.youtube.com/watch?v=gREVHiZjXeQ&ab_channel=Techdose
+
+//1st approach with 2 vectors left and right
+// class Solution {
+// public:
+//     vector<int> productExceptSelf(vector<int>& nums) {
+//          vector<int> left,ans;
+//     int product=1;
+//     int n=nums.size();
+    
+//     vector<int> right(n,0);
+//     for(int i=0;i<n;i++)
+//     {
+//         left.push_back(product);
+//         product *= nums[i];
+//     }
+    
+//     product =1;
+//     for(int i=n-1;i>=0;i--)
+//     {
+//         right[i] = product;
+//         product *= nums[i];
+//     }
+//      for(int i=0;i<n;i++)
+//     {
+//         ans.push_back(left[i] * right[i]);
+//     }
+    
+//     return ans;
+        
+//     }
+// };
+
+//Approach - 2
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
+        
         int n = nums.size();
-        vector<int> ans(n);
-        vector<int> left_Product(n);
-        vector<int> right_Product(n);
-        left_Product[0] = 1;
-        for(int i=1; i<n; i++){
-            left_Product[i] = left_Product[i-1] * nums[i-1];
+        vector<int> output;
+        if(n<1)
+            return output;
+        
+        int product = 1;
+        for(int i=0;i<n;++i)
+        {
+            product *= nums[i];
+            output.push_back(product);            
         }
-        right_Product[n-1] = 1;
-        for(int i=n-2; i>=0; i--){
-            right_Product[i] = right_Product[i+1] * nums[i+1];
+        
+        //Traverse from right and update output array
+        product = 1;
+        for(int i=n-1;i>0;--i)
+        {
+            output[i] = output[i-1]*product;
+            product *= nums[i];
         }
-        for(int i=0; i<n; i++){
-            ans[i] = left_Product[i] * right_Product[i];
-        }
-        return ans;
+        output[0] = product;
+        
+        return output;
     }
 };
