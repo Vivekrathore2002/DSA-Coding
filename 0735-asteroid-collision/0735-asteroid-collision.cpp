@@ -1,39 +1,36 @@
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& asteroids) {
-        deque<int> q;
-        for(int i: asteroids)
-        {
-            if(i > 0)
-            {
-                q.push_back(i);
-            }
-            else
-            {
-                while(q.size() && q.back() > 0 && q.back() < abs(i))
-                {
-                    q.pop_back();
-                }
-                if(q.empty())
-                {
-                    q.push_back(i);
-                }
-                else
-                {
-                    if(q.back() > 0 && q.back() == abs(i))
-                    q.pop_back();
-                    else if(q.back() < 0)
-                    q.push_back(i);
-                }
-            }
-        }
-        vector<int> ans;
-        while(q.size())
-        {
-            int t = q.front();
-            q.pop_front();
-            ans.push_back(t);
-        }
-        return ans;
+        int n=asteroids.size();
+        stack<int> st;
+       for(auto x : asteroids){
+           if(x>0){
+               st.push(x);
+           }
+           else{
+               while(st.size() && st.top()>0 && st.top()<abs(x))
+               {
+                   st.pop();
+               }
+               if(st.empty()){
+                   st.push(x);
+               }
+               else{
+                   if(st.top()>0 && st.top()==abs(x)){
+                       st.pop();
+                   }
+                   else if(st.top()<0){
+                       st.push(x);
+                   }
+               }
+           }
+       }
+       vector<int> ans;
+       while(!st.empty()){
+           ans.push_back(st.top());
+           st.pop();
+       }
+       reverse(ans.begin(),ans.end());
+       return ans;
     }
 };
