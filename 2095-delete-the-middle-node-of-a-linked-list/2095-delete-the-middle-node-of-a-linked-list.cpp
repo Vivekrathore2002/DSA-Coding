@@ -28,9 +28,9 @@ public:
         if (prev) {
             prev->next = slow->next;
         } 
-        else {
-            head = head->next;
-        }
+        // else {
+        //     head = head->next;
+        // }
 
         delete slow; // Free memory of the middle node
         return head;
