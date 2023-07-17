@@ -6,29 +6,16 @@ using namespace std;
 class Solution {
 	public:
 		string FirstNonRepeating(string A){
-		    unordered_map<char,int> count;
-		    queue <int> q;
+		    // Code here
+		    unordered_map<char,int> mm;
+		    queue<char> q;
 		    string ans="";
 		    for(int i=0;i<A.length();i++){
-		        char ch = A[i];
-		        //increase it's count
-		        count[ch]++;
-		        //queue me push crow
-		        q.push(ch);
-		        while(!q.empty()){
-		            if(count[q.front()]>1){
-		                //repeating character
-		                q.pop();
-		            }
-		            else{
-		                //non repeating character milgya
-		                ans.push_back(q.front());
-		                break;
-		            }
-		        }
-		        if(q.empty()){
-		            ans.push_back('#');
-		        }
+		        mm[A[i]]++;
+		        if(mm[A[i]]==1)q.push(A[i]);
+		        while(q.size()!=0 && mm[q.front()]>1)q.pop();
+		        if(q.size()==0)ans+='#';
+		        else ans+=q.front();
 		    }
 		    return ans;
 		}
