@@ -7,31 +7,37 @@ using namespace std;
 
 // } Driver Code Ends
 //User function Template for C++
-
+// https://www.youtube.com/watch?v=U095bJJtW3w&t=388s
 class Solution{
   public:
-  int solve(string s1, string s2, int n, int m){
-        int t[n+1][m+1];
-        for(int i=0; i<n+1; i++){
-            for(int j=0; j<m+1; j++){
-                if(i==0 || j==0) t[i][j]=0;
-            }
-        }
-        for(int i=1; i<n+1; i++){
-            for(int j=1; j<m+1; j++){
-                if(s1[i-1]==s2[j-1]){
-                    t[i][j]=1+t[i-1][j-1];
+  int solve(string& a, string& b){
+        int n1 = a.length();
+        int n2 = b.length();
+
+        vector<vector<int>> dp(n1+1, vector<int> (n2+1, 0));
+        vector<int> currRow(n2+1, 0);
+        vector<int> nextRow(n2+1, 0);
+
+        for(int i = n1-1; i>=0; i--){
+            for(int j = n2-1; j>=0; j--){
+                int ans = 0;
+                if(a[i] == b[j])
+                    ans = 1 + nextRow[j+1];
+                else
+                {
+                    ans = max(nextRow[j], currRow[j+1]);
                 }
-                else t[i][j]=max(t[i-1][j], t[i][j-1]);
+                currRow[j] = ans;
             }
+            nextRow = currRow;
         }
-        return t[n][m];
+        return nextRow[0];
     }
     int longestPalinSubseq(string A) {
-        string s2 = A;
-        reverse(s2.begin(),s2.end());
-        int n=A.length(), m=s2.length();
-        return solve(A, s2, n, m);
+        string revStr = A;
+        reverse(revStr.begin(),revStr.end());
+        int ans = solve(A,revStr);
+        return ans;
     }
 };
 
