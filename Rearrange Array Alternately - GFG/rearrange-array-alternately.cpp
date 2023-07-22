@@ -20,12 +20,10 @@ class Solution{
     vector<long long> ans;
     int i = 0;
     int j = n - 1;
-
-    while (i <= j) {
+    while (i < j) {
         ans.push_back(arr[j--]);
         ans.push_back(arr[i++]);
     }
-
     // If the original array has an odd number of elements, add the middle element
     if (n % 2 != 0) {
         ans.push_back(arr[n / 2]);
