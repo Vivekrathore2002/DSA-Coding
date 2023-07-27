@@ -83,11 +83,6 @@ Node* deleteMid(Node* head)
         slow=slow->next;
         fast=fast->next->next;
     }
-    // if (prev != nullptr) {
         prev->next = slow->next;
-    // } else {
-        // If 'prev' is nullptr, it means the list had only two nodes, and we are deleting the first one
-        // head = slow->next;
-    // }
     return head;
 }
