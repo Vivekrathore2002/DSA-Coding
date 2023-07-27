@@ -1,13 +1,19 @@
-//There can be two approached possible 
-// 1.Binary search - which i know but it's already 1:25 am today(11/06/23) so imma just use 2nd approach with little more complexity
-
-
-
-//Approach 2 - Lazy one - 
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        return nums[0];
+        int left = 0;
+    int right = nums.size() - 1;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        // Check if the minimum element lies in the left half
+        if (nums[mid] > nums[right]) {
+            left = mid + 1;
+        }
+        // Check if the minimum element lies in the right half
+        else {
+            right = mid;
+        }
+    }
+    return nums[left];
     }
 };
