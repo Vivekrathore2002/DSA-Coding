@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 /* Link list Node */
@@ -36,26 +37,32 @@ int getNthFromLast(struct Node* head, int n);
 */
 
 //Function to find the data of nth node from the end of a linked list.
-class Solution {
+class Solution{
 public:
-    int getNthFromLast(Node *head, int n)
-{
-       // Your code here
-       Node* first=head,*second=head;
-       int c=0;
-       while(first){
-           first=first->next;
-           c++;
-           if(c>n){
-               second=second->next;
-           }
-       }
-       if(c<n)return -1;
-       return second->data;
+    int getNthFromLast(Node* head, int n) {
+    Node* curr = head;
+    int count = 0;
+    
+    // Count the total number of nodes in the linked list
+    while (curr != NULL) {
+        count++;
+        curr = curr->next;
+    }
+    // Check if n is within valid range
+    if (n > count || n < 1) {
+        return -1; // Invalid input, n is out of range
+    }
+    int positionFromStart = count - n; // Calculate the position of the node from the start
+    Node* temp = head;
+    while (positionFromStart > 0) {
+        temp = temp->next;
+        positionFromStart--;
+    }
+    
+    return temp->data;
 }
+
 };
-
-
 
 
 
