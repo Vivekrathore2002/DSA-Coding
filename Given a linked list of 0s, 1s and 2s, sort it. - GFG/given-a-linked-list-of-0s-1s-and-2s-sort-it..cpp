@@ -29,41 +29,73 @@ struct Node *start = NULL;
 };
 
 */
-void insertAtTail(Node* &tail, Node* curr ) {
-    tail -> next = curr;
-    tail = curr;
-}
+// https://www.youtube.com/watch?v=ogmBt6f9hw8&t=674s
+//Basically here we can have two approaches
+// 1.Count every number like 0,1,2 data
+
+// 2.(best) - Just make individual lists of each 0,1,2
+// here we have used 2nd approach - given by love babbar
 class Solution
 {
     public:
-    //Function to sort a linked list of 0s, 1s and 2s.
-    Node* segregate(Node *head) {
+    void insertAtTail(Node* &tail, Node* curr ) {
+        tail -> next = curr;
+        tail = curr;
+    }
+    Node* segregate(Node *head)
+    {
+        Node* zeroHead = new Node(-1);
+        Node* zeroTail = zeroHead;
+        Node* oneHead = new Node(-1);
+        Node* oneTail = oneHead;
+        Node* twoHead = new Node(-1);
+        Node* twoTail = twoHead;
         
-        // Add code here
-        int z=0,o=0,t=0;
-        Node* temp=head;
-        while(temp){
-            if(temp->data==0)z++;
-            else if(temp->data==1)o++;
-            else t++;
-            temp=temp->next;
-        }
-        temp=head;
-        while(temp){
-            if(z){
-                temp->data=0;
-                z--;
+        Node* curr = head;
+        
+        // create separate list 0s, 1s and 2s
+        while(curr != NULL) {
+            
+            int value = curr -> data;
+            
+            if(value == 0) {
+                insertAtTail(zeroTail, curr);
             }
-            else if(o){
-                temp->data=1;
-                o--;
+            else if(value == 1) {
+                insertAtTail(oneTail, curr);
             }
-            else temp->data=2;
-            temp=temp->next;
+            else if(value == 2) {
+                insertAtTail(twoTail, curr);
+            }       
+            curr = curr -> next;
         }
+        
+        //merge 3 sublist
+        
+        // 1s list not empty
+        if(oneHead -> next != NULL) {
+            zeroTail -> next = oneHead -> next;
+        }
+        else {
+            //1s list -> empty
+            zeroTail -> next = twoHead -> next;
+        }
+        
+        oneTail -> next = twoHead -> next;
+        twoTail -> next = NULL;
+        
+    	//setup head 
+        head = zeroHead -> next;
+        
+        //delete dummy nodes
+        delete zeroHead;
+        delete oneHead;
+        delete twoHead;
+        
         return head;
     }
 };
+
 
 
 //{ Driver Code Starts.
