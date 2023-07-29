@@ -59,87 +59,68 @@ struct Node {
 
 class Solution
 {
-    private:
-    Node* reverse(Node* head) {
-        
-        Node* curr = head;
-        Node* prev = NULL;
-        Node* next = NULL;
-        
-        while(curr != NULL) {
-            next = curr -> next;
-            curr -> next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    }
-    
-    void insertAtTail(struct Node* &head, struct Node* &tail, int val) {
-        
-        Node* temp = new Node(val);
-        //empty list
-        if(head == NULL) {
-            head = temp;
-            tail = temp;
-            return;
-        }
-        else
-        {
-            tail -> next = temp;
-            tail = temp;
-        }
-    }
-    
-    struct Node* add(struct Node* first, struct Node* second) {
-        int carry = 0;
-        
-        Node* ansHead = NULL;
-        Node* ansTail = NULL;
-        
-        while(first != NULL || second != NULL || carry != 0) {
-            
-            int val1 = 0;
-            if(first != NULL)
-                val1 = first -> data;
-                
-            int val2 = 0;
-            if(second !=NULL)
-                val2 = second -> data;
-            
-            
-            int sum = carry + val1 + val2;
-            
-            int digit = sum%10;
-            
-            //create node and add in answer Linked List
-            insertAtTail(ansHead, ansTail, digit);
-            
-            carry = sum/10;
-            if(first != NULL)
-                first = first -> next;
-            
-            if(second != NULL)
-                second = second -> next;
-        }
-        return ansHead;
-    }
     public:
-    //Function to add two numbers represented by linked list.
-    struct Node* addTwoLists(struct Node* first, struct Node* second)
-    {
-        //step 1 -  reverse input LL
+    struct Node* reverse(Node* head) {
+    Node* prev = NULL;
+    Node* curr = head;
+    while (curr != NULL) {
+        Node* nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextNode;
+    }
+    return prev;
+}
+
+// Function to add two numbers represented by linked lists.
+struct Node* addTwoLists(struct Node* first, struct Node* second) {
+    // Check if both lists are empty, return NULL.
+        if (!first && !second) {
+            return NULL;
+        }
+        
         first = reverse(first);
         second = reverse(second);
         
-        //step2 - add 2 LL
-        Node* ans = add(first, second);
-        
-        //step 3 
-        ans = reverse(ans);
-        
-        return ans;
+        Node* l3 = new Node(0);
+        int carry = 0;
+        Node* head = l3;
+    
+        while (first && second) {              
+            int value = first->data + second->data + carry; 
+            carry = value / 10;
+            l3->next = new Node(value % 10);
+            l3 = l3->next;
+            first = first->next;
+            second = second->next;           
+        }
+    
+        while (first) { 
+            int value = first->data + carry; 
+            carry = value / 10;
+            l3->next = new Node(value % 10);
+            l3 = l3->next;
+            first = first->next;
+        }
+    
+        while (second) {
+            int value = second->data + carry; 
+            carry = value / 10;
+            l3->next = new Node(value % 10);
+            l3 = l3->next;
+            second = second->next;     
+        }
+    
+        if (carry) {
+            l3->next = new Node(carry);
+        }
+    
+        Node* result = head->next;
+        delete head; // Free the memory used by the initial zero node.
+        return reverse(result);
     }
+    
+
 };
 
 
