@@ -100,54 +100,62 @@ struct Node
     }
 };
  */
+//  https://www.youtube.com/watch?v=nHMQ33LZ6oA&list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&index=69
+//There are basically two approaches to get this 
+// 1.By O(n^2) time complexity(By one height function and another diameter function)
+// class Solution{
+//     public:
+//     int height(Node* root){
+//     if(root==NULL){
+//         return 0;
+//     }
+//     int left=height(root->left);
+//     int right=height(root->right);
+//     int ans=max(left,right)+1;
+// }
+//     //Function to check whether a binary tree is balanced or not.
+//     bool isBalanced(Node *root)
+//     {
+//         if(root==NULL){
+//             return true;
+//         }
+//         bool left=isBalanced(root->left);
+//         bool right=isBalanced(root->right);
+//         bool diff = abs(height(root->left)-height(root->right))<=1;
+//         if(left&&right&&diff){
+//             return true;
+//         }
+//         else{
+//             return false;
+//         }
+//     }
+// };
 
-/* A binary tree node structure
 
-struct Node
-{
-    int data;
-    struct Node* left;
-    struct Node* right;
-    
-    Node(int x){
-        data = x;
-        left = right = NULL;
-    }
-};
- */
-
+//Approach - 2 with O(N) space
 class Solution{
-   public:
-    //Function to check whether a binary tree is balanced or not.
-    pair<bool, int> isBalancedFast(Node* root) {
-                // base case
-        if(root == NULL)
-        {
-            pair<bool, int> p = make_pair(true, 0);
+    public:
+    pair<bool,int> isBalancedFast(Node* root){
+        if(root==NULL){
+            pair<bool,int> p=make_pair(true,0);
             return p;
         }
-        
-        pair<int,int> left = isBalancedFast(root->left);
-        pair<int,int> right = isBalancedFast(root->right);
-        
-        
-        bool leftAns = left.first;
-        bool rightAns = right.first;
-        
-        bool diff = abs (left.second - right.second ) <=1;
-        
+        pair<bool,int> left=isBalancedFast(root->left);
+        pair<bool,int> right=isBalancedFast(root->right);
+        bool leftAns=left.first;
+        bool rightAns=right.first;
+        bool diff = abs(left.second - right.second)<=1;
         pair<bool,int> ans;
-        ans.second = max(left.second, right.second) + 1;
-        
-        if(leftAns && rightAns && diff) {
-           ans.first = true;
+        ans.second = max(left.second,right.second)+1;
+        if(leftAns && rightAns && diff){
+            ans.first=true;
         }
-        else
-        {
-            ans.first = false;
+        else{
+            ans.first=false;
         }
         return ans;
     }
+    //Function to check whether a binary tree is balanced or not.
     bool isBalanced(Node *root)
     {
         return isBalancedFast(root).first;
