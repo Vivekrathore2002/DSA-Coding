@@ -105,73 +105,60 @@ struct Node
 
 class Solution {
 public:
-    void traverseLeft(Node* root, vector<int> &ans) {
-        //base case
-        if( (root == NULL) || (root->left == NULL && root->right == NULL) )
-            return ;
+    void leftTraversal(Node* root, vector<int>& ans) {
+        if (!root || (!root->left && !root->right))
+            return;
 
         ans.push_back(root->data);
-        if(root->left)
-            traverseLeft(root->left, ans);
-        else
-            traverseLeft(root->right, ans);
 
+        if (root->left)
+            leftTraversal(root->left, ans);
+        else
+            leftTraversal(root->right, ans);
     }
 
-    void traverseLeaf(Node* root, vector<int> &ans) {
-        //base case
-        if(root == NULL)
-            return ;
+    void rightTraversal(Node* root, vector<int>& ans) {
+        if (!root || (!root->left && !root->right))
+            return;
 
-        if(root->left == NULL && root->right == NULL) {
+        if (root->right)
+            rightTraversal(root->right, ans);
+        else
+            rightTraversal(root->left, ans);
+
+        ans.push_back(root->data);
+    }
+
+    void traverseLeaf(Node* root, vector<int>& ans) {
+        if (!root)
+            return;
+
+        if (!root->left && !root->right) {
             ans.push_back(root->data);
             return;
         }
 
         traverseLeaf(root->left, ans);
         traverseLeaf(root->right, ans);
-
     }
 
-    void traverseRight(Node* root, vector<int> &ans) {
-        //base case
-        if( (root == NULL) || (root->left == NULL && root->right == NULL) )
-            return ;
-
-        if(root->right)
-            traverseRight(root->right, ans);
-        else
-            traverseRight(root->left, ans);
-
-        //wapas aagye
-        ans.push_back(root->data);
-
-    }
-
-    vector <int> boundary(Node *root)
-    {
+    vector<int> boundary(Node* root) {
         vector<int> ans;
-        if(root == NULL)
+        if (!root)
             return ans;
 
         ans.push_back(root->data);
 
-        //left part print/store
-        traverseLeft(root->left, ans);
+        if (root->left)
+            leftTraversal(root->left, ans);
 
-        //traverse Leaf Nodes
-
-        //left subtree
         traverseLeaf(root->left, ans);
-        //right subtree
         traverseLeaf(root->right, ans);
 
-        //traverse right part
-        traverseRight(root->right, ans);
+        if (root->right)
+            rightTraversal(root->right, ans);
 
         return ans;
-
-
     }
 };
 
