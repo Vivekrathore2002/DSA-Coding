@@ -26,7 +26,7 @@ void rotate(vector<vector<int>>& matrix) {
 
     //swap rows now
     for(int i=0;i<n/2;i++){
-        for(int j=0;j<n;j++){
+        for(int j=0;j<m;j++){
             swap(matrix[i][j],matrix[n-i-1][j]);
         }
     }
