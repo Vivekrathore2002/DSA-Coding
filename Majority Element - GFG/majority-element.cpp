@@ -7,26 +7,29 @@ using namespace std;
 
 // } Driver Code Ends
 //User function template for C++
-class Solution {
-public:
-    // Function to find majority element in the array
+
+class Solution{
+  public:
+     // Function to find majority element in the array
     // a: input array
     // size: size of input array
-    int majorityElement(int a[], int size) {
+    int majorityElement(int nums[], int n)
+    {
+        
         unordered_map<int, int> mp;
-        for (int i = 0; i < size; i++) {
-            mp[a[i]]++;
+        // int n = nums.size();
+        for (int i=0;i<n;i++) {
+            mp[nums[i]]++;
         }
-        for (int i = 0; i < size; i++) {
-            if (mp[a[i]] > size / 2) {
-                return a[i];
+        for (auto entry : mp) {
+            if (entry.second > n / 2) {
+                return entry.first;
             }
         }
         return -1;
+        
     }
 };
-
-
 
 //{ Driver Code Starts.
 
