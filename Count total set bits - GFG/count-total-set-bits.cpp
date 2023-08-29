@@ -8,7 +8,7 @@ using namespace std;
 // } Driver Code Ends
 //User function Template for C++
 
-// https://www.youtube.com/watch?v=ntDjZXwe02w
+// https://www.youtube.com/watch?v=s4t3YDw4RcY
 class Solution{
     public:
     // n: input to count the number of set bits
