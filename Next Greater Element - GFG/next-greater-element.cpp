@@ -17,11 +17,11 @@ class Solution
               st.pop();
             }
     
-            if (i < n) {
+            // if (i < n) {
               if (!st.empty()){
                   nge[i] = st.top();
               }
-            }
+            // }
             st.push(nums[i]);
           }
           return nge;
