@@ -13,7 +13,7 @@ class Solution
           vector < long long  > nge(n, -1);
           stack < long long > st;
           for (int i = n - 1; i >= 0; i--) {
-            while (!st.empty() && st.top() <= nums[i % n]) {
+            while (!st.empty() && st.top() <= nums[i]) {
               st.pop();
             }
     
@@ -22,7 +22,7 @@ class Solution
                   nge[i] = st.top();
               }
             }
-            st.push(nums[i % n]);
+            st.push(nums[i]);
           }
           return nge;
     }
