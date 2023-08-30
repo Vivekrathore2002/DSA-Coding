@@ -16,12 +16,9 @@ class Solution
             while (!st.empty() && st.top() <= nums[i]) {
               st.pop();
             }
-    
-            // if (i < n) {
               if (!st.empty()){
                   nge[i] = st.top();
               }
-            // }
             st.push(nums[i]);
           }
           return nge;
