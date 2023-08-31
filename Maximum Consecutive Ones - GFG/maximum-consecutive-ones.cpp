@@ -3,6 +3,8 @@
 using namespace std;
 
 // } Driver Code Ends
+
+// https://www.youtube.com/watch?v=hzueK-imcXg&ab_channel=CodewithAlisha
 class Solution {
   public:
     int longestOnes(int n, vector<int>& nums, int k) {
