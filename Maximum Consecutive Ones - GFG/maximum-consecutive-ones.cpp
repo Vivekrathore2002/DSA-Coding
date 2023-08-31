@@ -3,15 +3,15 @@
 using namespace std;
 
 // } Driver Code Ends
-
-// https://www.youtube.com/watch?v=hzueK-imcXg
 class Solution {
   public:
     int longestOnes(int n, vector<int>& nums, int k) {
+        // Code here
         int ans = 0;
         int flip = 0;
         int i = 0;
         int j = 0;
+        // int n = nums.size();
         while (i < n) {
             if (nums[i] == 0) {
                 flip++;
@@ -24,8 +24,8 @@ class Solution {
             ans = max(ans, i - j + 1);
             i++;
         }
-        return ans;   
-        }
+        return ans; 
+    }
 };
 
 //{ Driver Code Starts.
