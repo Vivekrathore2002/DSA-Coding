@@ -11,30 +11,21 @@
  */
 class Solution {
 public:
+void solve(TreeNode* root,vector<int> &ans){
+      if(root==NULL){
+          return;
+      }
+      if(root->left){
+          solve(root->left,ans);
+      }
+      ans.push_back(root->val);
+      if(root->right){
+          solve(root->right,ans);
+      }
+  }
     int countNodes(TreeNode* root) {
-        if (root == nullptr)
-            return 0;
-        
-        int leftHeight = 0, rightHeight = 0;
-        TreeNode* leftNode = root;
-        TreeNode* rightNode = root;
-        
-        while (leftNode != nullptr) {
-            leftNode = leftNode->left;
-            leftHeight++;
-        }
-        
-        while (rightNode != nullptr) {
-            rightNode = rightNode->right;
-            rightHeight++;
-        }
-        
-        if (leftHeight == rightHeight) {
-            // The tree is a complete binary tree, so we can calculate the node count directly
-            return pow(2, leftHeight) - 1;
-        } else {
-            // The tree is not complete, so we count the nodes recursively
-            return 1 + countNodes(root->left) + countNodes(root->right);
-        }
+         vector<int> ans;
+        solve(root,ans);
+        return ans.size();
     }
 };
