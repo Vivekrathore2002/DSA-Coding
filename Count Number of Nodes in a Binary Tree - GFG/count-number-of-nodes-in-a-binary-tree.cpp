@@ -25,26 +25,60 @@ struct Node {
 // } Driver Code Ends
 // User function Template for C++
 
+// class Solution {
+//   public:
+//   void solve(Node* root,vector<int> &ans){
+//       if(root==NULL){
+//           return;
+//       }
+//       if(root->left){
+//           solve(root->left,ans);
+//       }
+//       ans.push_back(root->val);
+//       if(root->right){
+//           solve(root->right,ans);
+//       }
+//   }
+//     int countNodes(Node* root) {
+//         vector<int> ans;
+//         solve(root,ans);
+//         return ans.size();
+//     }
+// };
+
+// log(n) by striver
+
 class Solution {
   public:
-  void solve(Node* root,vector<int> &ans){
-      if(root==NULL){
-          return;
-      }
-      if(root->left){
-          solve(root->left,ans);
-      }
-      ans.push_back(root->val);
-      if(root->right){
-          solve(root->right,ans);
-      }
-  }
+  int findHeightLeft(Node* node){
+    int height = 0;
+    while(node){
+        height++;
+        node=node->left;
+    }
+    return height;
+}
+int findHeightRight(Node* node){      
+    int height = 0;
+    while(node){
+        height++;
+        node=node->right;
+    }
+    return height;
+}
     int countNodes(Node* root) {
-        vector<int> ans;
-        solve(root,ans);
-        return ans.size();
+        if(root==NULL){
+            return 0;
+        }
+        int lh=findHeightLeft(root);
+        int rh=findHeightRight(root);
+        if(lh==rh){
+            return pow(2,lh) - 1;
+        }
+        return 1+countNodes(root->left) + countNodes(root->right);
     }
 };
+
 
 //{ Driver Code Starts.
 
