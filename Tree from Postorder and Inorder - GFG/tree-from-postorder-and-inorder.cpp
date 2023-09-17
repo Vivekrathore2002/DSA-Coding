@@ -63,32 +63,31 @@ struct Node
         left = right = NULL;
     }
 };*/
-void createMapping(int in[],map<int,int> &nodeToIndex,int n){
-    for(int i=0;i<n;i++){
-        nodeToIndex[in[i]]=i;
-    }
-}
- Node* solve(int in[],int post[], int &index ,int inorderStart , int inorderEnd , int n,map<int,int> &nodeToIndex){
-        if(index<0 || inorderStart>inorderEnd){
-            return NULL ;
-        }
-        
-        int element = post[index--] ; // At every interation index is increasing
-        Node* root  = new Node(element); 
-        int position  = nodeToIndex[element];
-        
-        root->right = solve(in , post , index , position+1 , inorderEnd ,n,nodeToIndex);
-        root->left = solve(in , post , index  , inorderStart , position-1 ,n,nodeToIndex);
-        
-        
-        return root ;
-        
-    }
+
+
 //Function to return a tree created from postorder and inoreder traversals.
-Node *buildTree(int in[], int post[], int n) {
-    int postOrderIndex=n-1;
-    map<int,int> nodeToIndex;
-    createMapping(in,nodeToIndex,n);
-    Node* ans=solve(in,post,postOrderIndex,0,n-1,n,nodeToIndex);
-    return ans;
+
+// https://www.youtube.com/watch?v=LgLRTaEMRVc&t=46s
+
+Node* build(int inorder[],int is,int ie,int postorder[],int ps,int pe,map<int,int> &mpp)
+    {
+        if(ps>pe || is>ie)
+            return NULL;
+        
+        Node* root = new Node(postorder[pe]);
+        int inroot = mpp[postorder[pe]];
+        int numleft = inroot-is;
+        root->left = build(inorder,is,inroot-1,postorder,ps,ps+numleft-1,mpp);
+        root->right = build(inorder,inroot+1,ie,postorder,ps+numleft,pe-1,mpp);
+        return root;
+    }
+Node *buildTree(int inorder[], int postorder[], int n) {
+    // Your code here
+        map<int,int> mpp;
+        
+        for(int i = 0;i<n;i++)
+        {
+            mpp[inorder[i]] = i;
+        }
+        return build(inorder,0,n-1,postorder,0,n-1,mpp);
 }
