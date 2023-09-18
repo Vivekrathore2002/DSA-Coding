@@ -9,18 +9,34 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+//  https://www.youtube.com/watch?v=80Zug6D1_r4&t=1109s
 class Solution {
 public:
-void preorder(TreeNode* root,vector<int>&pre){
-    if(root){
-        pre.push_back(root->val);
-        preorder(root->left,pre);
-        preorder(root->right,pre);
-    }
-}
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> pre;
-        preorder(root,pre);
-        return pre;
+        vector < int > preorder;
+
+      TreeNode * cur = root;
+      while (cur != NULL) {
+        if (cur -> left == NULL) {
+          preorder.push_back(cur -> val);
+          cur = cur -> right;
+        } else {
+          TreeNode * prev = cur -> left;
+          while (prev -> right != NULL && prev -> right != cur) {
+            prev = prev -> right;
+          }
+    
+          if (prev -> right == NULL) {
+            prev -> right = cur;
+            preorder.push_back(cur -> val);
+            cur = cur -> left;
+          } else {
+            prev -> right = NULL;
+            cur = cur -> right;
+          }
+        }
+      }
+      return preorder;
     }
 };
