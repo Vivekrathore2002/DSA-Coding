@@ -104,10 +104,16 @@ class Solution {
       if(tree==NULL){
           return true;
       }
+      //if a parent would have only right node(not left node) which is not complete binary
+    //   tree then the right node would have index more than whole number of nodes 
+    //possible in the tree
+    //in that case print false;
       if(index>=cnt){
           return false;
       }
       else{
+          //to check left node 2*i+1;
+          //to check right node 2*i+2;
           bool left = isCbt(tree->left,2*index+1,cnt);
           bool right = isCbt(tree->right,2*index+2,cnt);
           return left&&right;
@@ -140,13 +146,23 @@ class Solution {
     }
   }
     bool isHeap(struct Node* tree) {
+        
+        //first we would find out all the nodes(i.e. count Nodes)
         int index = 0;
         int totalCount = countNodes(tree);
         
+        //a heap is a complete binary tree(cbt) and all the nodes have higher values than
+        //their child nodes
+        // isCbt is to check whether a tree is a complete binary tree or not and
+        //isMaxOrder is to check the condition that all the parent nodes have greater 
+        // values than the child nodes or not
+        
         if(isCbt(tree,index,totalCount) && isMaxOrder(tree)){
+            //if both true than print true
             return true;
         }
         else{
+            //else false
             return false;
         }
     }
