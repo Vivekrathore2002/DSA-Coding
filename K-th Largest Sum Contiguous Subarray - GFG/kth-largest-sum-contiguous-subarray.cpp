@@ -9,22 +9,45 @@ using namespace std;
 
 // https://youtu.be/eccAKrmffh8?si=kdBgi8XTWo0CE_j0
 // approach 1 : N^2*logn
+// class Solution{
+// public:
+//     int kthLargest(vector<int> &arr,int n,int k){
+//         vector<int> sumStore;
+//         for(int i=0;i<n;i++){
+//             int sum = 0;
+//             for(int j = i;j<n;j++){
+//                 sum+=arr[j];
+//                 sumStore.push_back(sum);
+//             }
+//         }
+        
+//         // till now the complexity was N^2 now the length is equal to N^2 so,
+//         // the sorting comlexity will combined (N^2)*(logn)
+//         sort(sumStore.begin(),sumStore.end());
+//         return sumStore[sumStore.size()-k];
+//     }
+// };
+
+
+//Approach - 2 : Use heap(priority queue)
 class Solution{
 public:
     int kthLargest(vector<int> &arr,int n,int k){
-        vector<int> sumStore;
-        for(int i=0;i<n;i++){
+        priority_queue<int,vector<int>,greater<int>> pq;
+        for(int i =0;i<n;i++){
             int sum = 0;
-            for(int j = i;j<n;j++){
+            for(int j=i;j<n;j++){
                 sum+=arr[j];
-                sumStore.push_back(sum);
+                if(pq.size()<k){
+                    pq.push(sum);
+                }
+                else if(pq.top()<sum){
+                    pq.pop();
+                    pq.push(sum);
+                }
             }
         }
-        
-        // till now the complexity was N^2 now the length is equal to N^2 so,
-        // the sorting comlexity will combined (N^2)*(logn)
-        sort(sumStore.begin(),sumStore.end());
-        return sumStore[sumStore.size()-k];
+        return pq.top();
     }
 };
 
