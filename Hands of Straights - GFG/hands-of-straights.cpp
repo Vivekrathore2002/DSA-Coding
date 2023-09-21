@@ -4,26 +4,30 @@ using namespace std;
 
 
 // } Driver Code Ends
+
+
 class Solution {
   public:
-    bool isStraightHand(int N, int groupSize, vector<int> &hand) {
-        map<int,int> mm;
-        for(auto x:hand){
-            mm[x]++;
+    bool isStraightHand(int n, int groupSize, vector<int> &hand) {
+        // int n = hand.size();
+        map<int,int> mp;
+        for(auto x: hand){
+            mp[x]++;
         }
-        int num=-1;
-        int c=0;
-        while(true){//an infinite loop which will end by break
-            num=mm.begin()->first;
-            c=0;
+        int num = -1;
+        while(true){
+            num=mp.begin()->first;
+            int c = 0;
             while(c<groupSize){
-                if(mm[num]==0) return false;
-                mm[num]--;
-                if(mm[num]==0) mm.erase(num);
+                if(mp[num]==0){
+                    return false;
+                }
+                mp[num]--;
+                if(mp[num]==0) mp.erase(num);
                 num++;
                 c++;
             }
-            if(mm.size()==0) break;
+            if(mp.size()==0) break;
         }
         return true;
     }
