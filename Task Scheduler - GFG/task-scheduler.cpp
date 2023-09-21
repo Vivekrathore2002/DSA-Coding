@@ -4,9 +4,10 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    int leastInterval(int N, int K, vector<char> &tasks) {
+    int leastInterval(int N, int k, vector<char> &tasks) {
         // int N=tasks.size();
         unordered_map<char,int> mp;
         int count=0;
@@ -14,7 +15,7 @@ class Solution {
             mp[e]++;
             count=max(count,mp[e]);
         }
-        int ans=(count-1)*(K+1);
+        int ans=(count-1)*(k+1);
         for(auto e:mp){
             if(e.second==count){
                 ans++;
